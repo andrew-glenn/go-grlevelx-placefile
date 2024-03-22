@@ -55,7 +55,7 @@ type Icon struct {
 func (i Icon) String() string {
 	// lat, lon, angle, fileNumber, iconNumber, quotedStrPtr
 	x := fmt.Sprintf(
-		"Icon: %.2f, %.2f, %d, %d, %d",
+		"Icon: %.10f, %.10f, %d, %d, %d",
 		i.Lat,
 		i.Lon,
 		i.Angle,

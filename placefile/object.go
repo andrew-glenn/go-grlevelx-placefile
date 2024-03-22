@@ -71,7 +71,7 @@ func (o *Object) parseColorText() string {
 
 func (o *Object) String() string {
 	var res string
-	res = fmt.Sprintf("Object: %.2f, %.2f\n", o.Lat, o.Lon)
+	res = fmt.Sprintf("Object: %.10f, %.10f\n", o.Lat, o.Lon)
 	res += o.parseIconDefs()
 	res += o.parseColorText()
 	for _, t := range o.text {
