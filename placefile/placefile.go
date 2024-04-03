@@ -7,6 +7,10 @@ import (
 	"gopkg.in/yaml.v3"
 )
 
+type PlacefileTextualData interface {
+	String() string
+}
+
 type IconFiles []IconFile
 type Objects []Object
 
@@ -28,9 +32,9 @@ func (objects Objects) String() string {
 
 type Placefile struct {
 	internalPlacefile
-	iconFiles   IconFiles `yaml:"-"`
-	objects     Objects   `yaml:"-"`
-	topComments []string  `yaml:"-"`
+	iconFiles   IconFiles              `yaml:"-"`
+	objects     []PlacefileTextualData `yaml:"-"`
+	topComments []string               `yaml:"-"`
 }
 
 type PlacefileInput struct {
@@ -74,7 +78,7 @@ func (p *Placefile) AddIconFile(fileNumber, iconWidthPixels, iconHeightPixels, h
 	p.iconFiles = append(p.iconFiles, i)
 }
 
-func (p *Placefile) AddObject(o Object) {
+func (p *Placefile) AddObject(o PlacefileTextualData) {
 	p.objects = append(p.objects, o)
 }
 
@@ -103,7 +107,9 @@ func (p *Placefile) MarshalYAML() (interface{}, error) {
 		s += p.iconFiles.String()
 	}
 	if len(p.objects) > 0 {
-		s += p.objects.String()
+		for _, o := range p.objects {
+			s += o.String()
+		}
 	}
 	return s, nil
 }
